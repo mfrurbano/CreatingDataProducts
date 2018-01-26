@@ -1,0 +1,30 @@
+---
+title: "Orlando Parks - 2016 Attendance"
+author: "Marcelo Urbano"
+date: "26 de janeiro de 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Obs.: Attendance numbers in thousands
+
+
+```{r, echo = FALSE, warning=FALSE}
+library(leaflet)
+names <- c("Disney's Animal Kingdom", "Disney's Blizzard Beach", "Disney's Magic Kingdom", "Disney's Hollywood Studios", "Epcot ", "Disney's Typhoon Lagoon ", "SeaWorld ", "Aquatica", "Universal Studios", "Universal Isles of Adventure")
+parks <- data.frame(Park = names,
+                         Attendance = c(10844, 2091, 20395, 10776, 11712, 2277, 4402, 1536, 9998, 9362),
+                        lat = c(28.3597, 28.3516, 28.3852, 28.3575, 28.3747, 28.3658, 28.4115, 28.4162, 28.4757, 28.4711),
+                        lng = c(-81.5913, -81.5752, -81.5639, -81.5583, -81.5495, -81.5296, -81.4617, -81.4566, -81.4694, -81.4716))
+
+parks %>% 
+  leaflet() %>% 
+  addTiles() %>% 
+  addCircles(lat=parks$lat,lng=parks$lng,weight = 1, radius = sqrt(parks$Attendance)*5,col=c('blue'),popup=paste(names,parks$Attendance))
+
+```
+
+
